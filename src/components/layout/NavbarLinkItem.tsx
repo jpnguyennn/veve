@@ -3,11 +3,9 @@ import Link from "next/link";
 const NavbarLinkItem = ({
 	text,
 	href,
-	active,
 }: {
 	text: string;
 	href: string;
-	active: any;
 }) => {
 	return (
 		<Link href={href}>

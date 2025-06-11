@@ -7,6 +7,7 @@ export async function GET() {
 
 		return events.reverse();
 	} catch (error) {
+		console.log(error);
 		return NextResponse.json(
 			{ error: "Internal Server Error" },
 			{ status: 500 }

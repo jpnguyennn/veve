@@ -1,14 +1,10 @@
 "use client";
 
-import { Separator } from "@/components/ui/separator";
 import { useWindowWidth } from "@react-hook/window-size";
 import {
 	ChevronRight,
-	CloudCog,
 	FileText,
 	Home,
-	Settings,
-	UserCog,
 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
@@ -17,7 +13,7 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { Nav } from "./SessionNav";
 
-type Props = {};
+type Props = object;
 
 export default function SessionNavbar({}: Props) {
 	const [isCollapsed, setIsCollapsed] = useState(false);

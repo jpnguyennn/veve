@@ -1,4 +1,3 @@
-import Navbar from "@/components/layout/Navbar";
 import ResponsiveLayout from "@/components/layout/ResponsiveLayout";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Noto_Sans } from "next/font/google";

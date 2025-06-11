@@ -1,8 +1,6 @@
 import prisma from "@/lib/prisma";
-import { PrismaClient } from "@prisma/client/extension";
 import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
-import { createTracing } from "trace_events";
+import { NextResponse } from "next/server";
 
 export async function GET() {
 	try {

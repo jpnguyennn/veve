@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, EyeOff, Lock, Shield, User } from "lucide-react";
+import { Eye, EyeOff, Lock, User } from "lucide-react";
 import { getSession, signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 
@@ -40,14 +40,11 @@ export default function AdminLogin() {
 				router.push("/dashboard");
 			}
 		} catch (error) {
+			console.log(error);
 			setError("An error occured during login...");
 		} finally {
 			setIsLoading(false);
 		}
-	};
-
-	const handleOAuthLogin = (provider: string) => {
-		signIn(provider, { callbackUrl: "/dashboard" });
 	};
 
 	return (
@@ -123,7 +120,9 @@ export default function AdminLogin() {
 									id="password"
 									name="password"
 									value={password}
-									onChange={(e) => setPassword(e.target.value)}
+									onChange={(e) =>
+										setPassword(e.target.value)
+									}
 									className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
 									placeholder="Enter your password"
 									required
@@ -147,11 +146,7 @@ export default function AdminLogin() {
 						{/* Submit Button */}
 						<button
 							onClick={handleSubmit}
-							disabled={
-								isLoading ||
-								!email ||
-								!password
-							}
+							disabled={isLoading || !email || !password}
 							className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-hero hover:bg-orange-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-hero disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
 						>
 							{isLoading ? (
