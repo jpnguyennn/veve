@@ -1,5 +1,17 @@
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Ellipsis, Pencil, Trash } from "lucide-react";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 interface Event {
 	id: string;
@@ -43,9 +55,44 @@ export default function EventDashboard() {
 			<div className="grid">
 				{events?.map((event) => (
 					<div key={event.id}>
-						<h1>HEHIUHEIUHDIAHIU</h1>
-						<h3>{event.event_name}</h3>
-						<p>Date: {new Date(event.date).toLocaleDateString()}</p>
+						<div className="flex">
+							<Image
+								src="/images/eventPictureTemp.jpg"
+								alt={event.event_name}
+								width={300}
+								height={275}
+								className="rounded-2xl"
+							/>
+							<div className="flex-col ml-10 min-w-[75%]">
+								<h1 className="text-4xl">{event.event_name}</h1>
+								<p>
+									Date:{" "}
+									{new Date(event.date).toLocaleDateString()}
+								</p>
+							</div>
+							<div>
+								<DropdownMenu>
+									<DropdownMenuTrigger asChild>
+										<Button variant={"outline"}>
+											<Ellipsis />
+										</Button>
+									</DropdownMenuTrigger>
+									<DropdownMenuContent>
+										<DropdownMenuLabel>
+											Event Settings
+										</DropdownMenuLabel>
+										<DropdownMenuSeparator />
+										<DropdownMenuItem>
+											<Pencil /> Edit Event
+										</DropdownMenuItem>
+										<DropdownMenuItem>
+											<Trash /> Delete Event
+										</DropdownMenuItem>
+									</DropdownMenuContent>
+								</DropdownMenu>
+							</div>
+						</div>
+						<Separator className="my-10" />
 					</div>
 				))}
 			</div>
