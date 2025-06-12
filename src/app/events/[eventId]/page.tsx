@@ -5,12 +5,14 @@ import prisma from "@/lib/prisma";
 import Image from "next/image";
 
 interface PageProps {
-	params: {
-		eventId: string;
-	};
+	eventId: string;
 }
 
-export default async function EventPage({ params }: PageProps) {
+export default async function EventPage({
+	params,
+}: {
+	params: Promise<PageProps>;
+}) {
 	const { eventId } = await params;
 
 	const event = await prisma.event.findUnique({ where: { id: eventId } });
