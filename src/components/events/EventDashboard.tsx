@@ -1,22 +1,31 @@
 import { useEffect, useState } from "react";
 
+interface Event {
+	id: string;
+	event_name: string;
+	date: string;
+	description: string;
+	image: string;
+	// Add other properties as needed based on your API response
+}
+
 export default function EventDashboard() {
-	const [events, setEvents] = useState<any[]>([]);
+	const [events, setEvents] = useState<Event[]>([]);
 	const [loading, setLoading] = useState(true);
 
 	// grab all events to this specific account
 	useEffect(() => {
-		const fetchEvents = async () => {
+		async function fetchEvents() {
 			try {
-				const response = await fetch("/api/user");
-				const data = await response.json();
-				setEvents(data.events);
+				const session = await fetch("/api/user");
+				const user = await session.json();
+				setEvents(user.events);
 			} catch (error) {
 				console.error("Failed to fetch events: ", error);
 			} finally {
 				setLoading(false);
 			}
-		};
+		}
 
 		fetchEvents();
 	}, []);
@@ -27,9 +36,9 @@ export default function EventDashboard() {
 			<div>
 				{events?.map((event) => (
 					<div key={event.id}>
+						<h1>HEHIUHEIUHDIAHIU</h1>
 						<h3>{event.event_name}</h3>
 						<p>Date: {new Date(event.date).toLocaleDateString()}</p>
-						{/* Add edit/delete buttons */}
 					</div>
 				))}
 			</div>

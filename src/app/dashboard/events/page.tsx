@@ -40,7 +40,9 @@ export default function Dashboard() {
 						<p className="">Create New Event</p>
 					</a>
 				</Button>
+				
 			</div>
+			<Separator className="my-10" />
 			<EventDashboard />
 		</div>
 	);
