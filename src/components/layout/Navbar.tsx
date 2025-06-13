@@ -12,7 +12,6 @@ const NAV_LIST = [
 
 const Navbar = () => {
 	const [navActive, setNavActive] = useState<boolean | null>(null);
-	const [activeIdx, setActiveIdx] = useState<number | null>(-1);
 
 	return (
 		<header>
@@ -38,17 +37,15 @@ const Navbar = () => {
 				</div>
 
 				<div className={`${navActive ? "active" : ""} nav__menu-list`}>
-					{NAV_LIST.map((menu, idx) => (
+					{NAV_LIST.map((menu) => (
 						<div
 							onClick={() => {
-								setActiveIdx(idx);
 								setNavActive(false);
 							}}
 							key={menu.text}
 							id="navbar_item"
 						>
 							<NavbarLinkItem
-								active={activeIdx === idx}
 								{...menu}
 							/>
 						</div>
