@@ -1,4 +1,4 @@
-import prisma from '@/lib/prisma'
+import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import readline from 'readline'
 
@@ -6,6 +6,8 @@ const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 })
+
+const prisma = new PrismaClient();
 
 function askQuestion(question: string): Promise<string> {
   return new Promise((resolve) => {

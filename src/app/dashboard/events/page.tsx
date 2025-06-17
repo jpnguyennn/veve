@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { PlusCircle } from "lucide-react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -35,10 +36,10 @@ export default function Dashboard() {
 			<Separator className="my-10" />
 			<div className="flex">
 				<Button>
-					<a href="/dashboard/events/new" className="flex">
+					<Link href="/dashboard/events/new" className="flex">
 						<PlusCircle className="mr-2"/>
 						<p className="">Create New Event</p>
-					</a>
+					</Link>
 				</Button>
 				
 			</div>

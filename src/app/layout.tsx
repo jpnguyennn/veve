@@ -1,18 +1,9 @@
 import ResponsiveLayout from "@/components/layout/ResponsiveLayout";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Noto_Sans } from "next/font/google";
+import {  Noto_Sans } from "next/font/google";
 import "./globals.css";
 import NextAuthProvider from "./providers/session-provider";
-
-const geistSans = Geist({
-	variable: "--font-geist-sans",
-	subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
-});
+import { Toaster } from "@/components/ui/sonner";
 
 const notoSans = Noto_Sans({
 	variable: "--font-noto-sans",
@@ -33,12 +24,13 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} ${notoSans.variable} antialiased`}
+				className={`${notoSans.variable} antialiased`}
 			>
 				<NextAuthProvider>
 					<div className="flex flex-col">
 						<ResponsiveLayout>
 							<main className="flex-1">{children}</main>
+							<Toaster />
 						</ResponsiveLayout>
 					</div>
 				</NextAuthProvider>

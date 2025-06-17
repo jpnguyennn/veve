@@ -17,6 +17,7 @@ export default async function Events() {
 				</h1>
 			</div>
 			<div className="m-20">
+				{events.length == 0 && (<div className="items-center justify-center text-center"><h1 className="text-5xl font-noto font-black">No events available! Check back later!</h1></div>)}
 				{events.map(async (event) => {
 					const host = await prisma.user.findUnique({
 						where: {id: event.hostId}
@@ -25,7 +26,7 @@ export default async function Events() {
 					return (
 						<div
 							key={event.id}
-							className="flex bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-white/20"
+							className="flex bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl mb-10 p-8 border border-white/20"
 						>
 							<Image
 								src="/images/eventPictureTemp.jpg"
