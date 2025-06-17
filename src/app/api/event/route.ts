@@ -32,7 +32,7 @@ const updateEvents = async (request: NextRequest) => {
 		}
 
 		const body = await request.json()
-		const {event_name, event_date, event_description} = body
+		const {event_name, event_date, event_description, location_name, location_address} = body
 
 		if (!event_name || !event_description || !event_date) {
 			return NextResponse.json({
@@ -47,6 +47,8 @@ const updateEvents = async (request: NextRequest) => {
 				date: event_date,
 				description: event_description,
 				hostId: user.id,
+				location_name: location_name,
+				location_address: location_address
 			},
 			select: {
 				id: true,

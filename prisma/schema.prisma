@@ -1,16 +1,11 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("POSTGRES_PRISMA_URL")
 }
-
-// Models for making the account and sessions for the website
 
 model Account {
   id                String  @id @default(cuid())
@@ -25,8 +20,7 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -45,14 +39,13 @@ model User {
   email         String    @unique
   emailVerified DateTime?
   image         String?
-  password      String? // For credentials login
+  password      String?
   role          String    @default("user")
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-
-  accounts Account[]
-  sessions Session[]
-  events Event[]
+  accounts      Account[]
+  events        Event[]
+  sessions      Session[]
 }
 
 model VerificationToken {
@@ -63,33 +56,27 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-
-// For each account, there is a list of models for events
-
 model Event {
-  id String @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  event_name String
-  date DateTime
+  id          String     @id @default(cuid())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  event_name  String
+  date        DateTime
   description String
-  image String?
-  
-  hostId String
-  host User @relation(fields: [hostId], references: [id], onDelete: Cascade)
-
-  attendees Attendee[]
+  image       String?
+  location_name String
+  location_address String
+  hostId      String
+  attendees   Attendee[]
+  host        User       @relation(fields: [hostId], references: [id], onDelete: Cascade)
 }
 
 model Attendee {
-  id String @id @default(cuid())
-
-  name String
-  email String
+  id           String @id @default(cuid())
+  name         String
+  email        String
   phone_number String
-  netid String
-
-  eventId String
-  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  netid        String
+  eventId      String
+  event        Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
 }
