@@ -1,21 +1,12 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Ellipsis, Pencil, Trash } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+import DeleteEvent from "./DeleteEvent";
 
 interface Event {
 	id: string;
@@ -55,33 +46,6 @@ export default function EventDashboard() {
 		fetchEvents();
 	}, [session, status]);
 
-	const deleteEvent = async (event_id: string) => {
-		setLoading(true);
-
-		try {
-			const response = await fetch("/api/event/delete", {
-				method: "POST",
-				headers: { "Content-Type": "application / json" },
-				body: JSON.stringify({ id: event_id }),
-			});
-
-			const result = await response.json();
-
-			if (result.ok) {
-				setLoading(false);
-			}
-		} catch (error) {
-			console.error("Error:", error);
-		} finally {
-			setLoading(false);
-
-			const date = new Date();
-			toast("message", {
-				description: `Created at: ${date.toISOString}`,
-			});
-		}
-	};
-
 	return (
 		<div>
 			{loading && <div>Loading events...</div>}
@@ -99,7 +63,7 @@ export default function EventDashboard() {
 									height={275}
 									className="rounded-2xl"
 								/>
-								<div className="flex-col ml-10 min-w-[75%]">
+								<div className="flex-col ml-10">
 									<h1 className="text-4xl">
 										{event.event_name}
 									</h1>
@@ -110,32 +74,14 @@ export default function EventDashboard() {
 										).toLocaleDateString()}
 									</p>
 								</div>
-								<div>
-									<DropdownMenu>
-										<DropdownMenuTrigger asChild>
-											<Button variant={"outline"}>
-												<Ellipsis />
-											</Button>
-										</DropdownMenuTrigger>
-										<DropdownMenuContent>
-											<DropdownMenuLabel>
-												Event Settings
-											</DropdownMenuLabel>
-											<DropdownMenuSeparator />
-											<DropdownMenuItem>
-												<a href={eventRoute}>
-													<Pencil /> Edit Event
-												</a>
-											</DropdownMenuItem>
-											<DropdownMenuItem
-												onClick={async () => {
-													await deleteEvent(event.id);
-												}}
-											>
-												<Trash /> Delete Event
-											</DropdownMenuItem>
-										</DropdownMenuContent>
-									</DropdownMenu>
+								<div className="flex items-center-safe ml-auto mr-0 font-light">
+									<a href={eventRoute} className="flex p-3 mr-5 text-gray-500 rounded-2xl hover:bg-gray-200 transition-all duration-450 ease-in-out">
+										<Pencil />
+										<p className="font-noto ml-2">
+											Edit
+										</p>
+									</a>
+									<DeleteEvent event_id={event.id} />
 								</div>
 							</div>
 							<Separator className="my-10" />
