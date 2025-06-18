@@ -1,21 +1,11 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Ellipsis, Pencil, Trash } from "lucide-react";
+import { Pencil } from "lucide-react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuSeparator,
-	DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
 import DeleteEvent from "./DeleteEvent";
 
 interface Event {
@@ -55,33 +45,6 @@ export default function EventDashboard() {
 
 		fetchEvents();
 	}, [session, status]);
-
-	const deleteEvent = async (event_id: string) => {
-		setLoading(true);
-
-		try {
-			const response = await fetch("/api/event/delete", {
-				method: "POST",
-				headers: { "Content-Type": "application / json" },
-				body: JSON.stringify({ id: event_id }),
-			});
-
-			const result = await response.json();
-
-			if (result.ok) {
-				setLoading(false);
-			}
-		} catch (error) {
-			console.error("Error:", error);
-		} finally {
-			setLoading(false);
-
-			const date = new Date();
-			toast("message", {
-				description: `Created at: ${date.toISOString}`,
-			});
-		}
-	};
 
 	return (
 		<div>
