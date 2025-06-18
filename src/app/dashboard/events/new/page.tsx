@@ -97,9 +97,6 @@ export default function NewEvent() {
 	const renderForm = () => {
 		return (
 			<div>
-				<h1 className="text-[2.5rem] text-center mb-10 font-black">
-					Basic Information
-				</h1>
 				<FormField
 					control={form.control}
 					name="event_name"
