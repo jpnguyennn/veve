@@ -96,6 +96,8 @@ const deleteEvent = async (request: NextRequest) => {
 		const body = await request.json();
 		const { id } = body;
 
+		console.log(body)
+
 		if (!id) {
 			return NextResponse.json(
 				{
