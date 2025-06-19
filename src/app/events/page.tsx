@@ -1,7 +1,5 @@
-import { Button } from "@/components/ui/button";
+import EventPort from "@/components/events/EventPort";
 import prisma from "@/lib/prisma";
-import Image from "next/image";
-import Link from "next/link";
 
 export default async function Events() {
 	const events = await prisma.event.findMany();
@@ -16,32 +14,39 @@ export default async function Events() {
 					Find Events
 				</h1>
 			</div>
-			<div className="m-20">
-				{events.length == 0 && (<div className="items-center justify-center text-center"><h1 className="text-5xl font-noto font-black">No events available! Check back later!</h1></div>)}
+			{events.length == 0 && (
+				<div className="items-center justify-center text-center">
+					<h1 className="text-5xl font-noto font-black">
+						No events available! Check back later!
+					</h1>
+				</div>
+			)}
+			<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 m-20">
 				{events.map(async (event) => {
 					const host = await prisma.user.findUnique({
-						where: {id: event.hostId}
-					})
+						where: { id: event.hostId },
+						select: {
+							id: true,
+							name: true,
+							image: true,
+						},
+					});
 
 					return (
-						<div
-							key={event.id}
-							className="flex bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl mb-10 p-8 border border-white/20"
-						>
-							<Image
-								src="/images/eventPictureTemp.jpg"
-								alt={event.event_name}
-								width={300}
-								height={150}
-								className="rounded-2xl"
+						<div key={event.id}>
+							<EventPort
+								event_id={event.id}
+								event_image="/images/eventPictureTemp.jpg"
+								event_title={event.event_name}
+								event_date={event.date}
+								event_host={
+									host || {
+										id: "0",
+										name: "unknown",
+										image: "/images/eventPictureTemp.jpg",
+									}
+								}
 							/>
-							<div className="flex-col ml-10">
-								<h1 className="font-noto font-black text-[3rem]">{event.event_name}</h1>
-								<p>{event.date.toDateString()}</p>
-								<p>{event.description}</p>
-								<p>Hosted By: {host?.name}</p>
-							</div>
-							<Button><Link href={`/events/${event.id}`}>Reserve</Link></Button>
 						</div>
 					);
 				})}
